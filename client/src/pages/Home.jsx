@@ -31,7 +31,7 @@ export default function Home() {
   const [siteDescription, setSiteDescription] = useState([]);
   const [siteVideoUrl, setSiteVideoUrl] = useState([]);
   const [formMsg, setFormMsg] = useState("");
-  const [slides, setSlides] = useState("");
+  const [slides, setSlides] = useState([]);
   const [siteName, setSiteName] = useState("");
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({

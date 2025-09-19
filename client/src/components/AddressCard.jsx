@@ -1,3 +1,113 @@
+// import React, { useEffect, useState } from "react";
+// import { Card, CardContent } from "../components/ui/card";
+// import { Phone, MapPin, Mail } from "lucide-react";
+// import {
+//   FaFacebook,
+//   FaTwitter,
+//   FaInstagram,
+//   FaLinkedin,
+//   FaGithub,
+// } from "react-icons/fa";
+// import axios from "axios";
+
+// function AddressCard() {
+//   const [siteInfo, setSiteInfo] = useState({
+//     siteName: "",
+//     address: "",
+//     mobile: "",
+//     facebook: "",
+//     twitter: "",
+//     instagram: "",
+//     linkedin: "",
+//     github: "",
+//   });
+
+//   const baseUrl = import.meta.env.VITE_BASE_URL;
+
+//   useEffect(() => {
+//     axios.get(`${baseUrl}/siteinfo`).then((res) => {
+//       setSiteInfo(res.data);
+//     });
+//   }, []);
+
+//   return (
+//     <div className="space-y-4">
+//       {/* Address */}
+//       <Card className="rounded-3xl">
+//         <CardContent className="p-6 space-y-4">
+//           <div className="flex items-center gap-3">
+//             <Phone className="h-5 w-5" /> {siteInfo.mobile}
+//           </div>
+//           <div className="flex items-center gap-3">
+//             <Mail className="h-5 w-5" /> {siteInfo.address}
+//           </div>
+//           <div className="flex items-center gap-3">
+//             <MapPin className="h-5 w-5" /> {siteInfo.siteName}
+//           </div>
+//         </CardContent>
+//       </Card>
+
+//       {/* Social Media */}
+//       <Card className="rounded-3xl">
+//         <CardContent className="p-6 flex items-center justify-center gap-6">
+//           {
+//             <a
+//               href="facebook"
+//               target="_blank"
+//               rel="noopener noreferrer"
+//               className="hover:text-blue-600"
+//             >
+//               <FaFacebook className="h-6 w-6" />
+//             </a>
+//           }
+//           {
+//             <a
+//               href={siteInfo.twitter}
+//               target="_blank"
+//               rel="noopener noreferrer"
+//               className="hover:text-sky-500"
+//             >
+//               <FaTwitter className="h-6 w-6" />
+//             </a>
+//           }
+//           {
+//             <a
+//               href={siteInfo.instagram}
+//               target="_blank"
+//               rel="noopener noreferrer"
+//               className="hover:text-pink-500"
+//             >
+//               <FaInstagram className="h-6 w-6" />
+//             </a>
+//           }
+//           {
+//             <a
+//               href={siteInfo.linkedin}
+//               target="_blank"
+//               rel="noopener noreferrer"
+//               className="hover:text-blue-700"
+//             >
+//               <FaLinkedin className="h-6 w-6" />
+//             </a>
+//           }
+//           {
+//             <a
+//               href={siteInfo.github}
+//               target="_blank"
+//               rel="noopener noreferrer"
+//               className="hover:text-gray-800"
+//             >
+//               <FaGithub className="h-6 w-6" />
+//             </a>
+//           }
+//         </CardContent>
+//       </Card>
+//     </div>
+//   );
+// }
+
+// export default AddressCard;
+
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "../components/ui/card";
 import { Phone, MapPin, Mail } from "lucide-react";
@@ -25,10 +135,23 @@ function AddressCard() {
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
-    axios.get(`${baseUrl}/siteinfo`).then((res) => {
-      setSiteInfo(res.data);
-    });
-  }, []);
+    axios
+      .get(`${baseUrl}/siteinfo`)
+      .then((res) => {
+        console.log("SiteInfo API Response:", res.data);
+
+        if (res.data) {
+          if (Array.isArray(res.data) && res.data.length > 0) {
+            setSiteInfo(res.data[0]); // যদি array আসে
+          } else if (typeof res.data === "object") {
+            setSiteInfo(res.data); // যদি object আসে
+          }
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching site info:", err);
+      });
+  }, [baseUrl]);
 
   return (
     <div className="space-y-4">
@@ -36,13 +159,13 @@ function AddressCard() {
       <Card className="rounded-3xl">
         <CardContent className="p-6 space-y-4">
           <div className="flex items-center gap-3">
-            <Phone className="h-5 w-5" /> {siteInfo.mobile}
+            <Phone className="h-5 w-5" /> {siteInfo?.mobile || "N/A"}
           </div>
           <div className="flex items-center gap-3">
-            <Mail className="h-5 w-5" /> {siteInfo.address}
+            <Mail className="h-5 w-5" /> {siteInfo?.address || "N/A"}
           </div>
           <div className="flex items-center gap-3">
-            <MapPin className="h-5 w-5" /> {siteInfo.siteName}
+            <MapPin className="h-5 w-5" /> {siteInfo?.siteName || "N/A"}
           </div>
         </CardContent>
       </Card>
@@ -50,17 +173,17 @@ function AddressCard() {
       {/* Social Media */}
       <Card className="rounded-3xl">
         <CardContent className="p-6 flex items-center justify-center gap-6">
-          {
+          {siteInfo.facebook && (
             <a
-              href="facebook"
+              href={siteInfo.facebook}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-blue-600"
             >
               <FaFacebook className="h-6 w-6" />
             </a>
-          }
-          {
+          )}
+          {siteInfo.twitter && (
             <a
               href={siteInfo.twitter}
               target="_blank"
@@ -69,8 +192,8 @@ function AddressCard() {
             >
               <FaTwitter className="h-6 w-6" />
             </a>
-          }
-          {
+          )}
+          {siteInfo.instagram && (
             <a
               href={siteInfo.instagram}
               target="_blank"
@@ -79,8 +202,8 @@ function AddressCard() {
             >
               <FaInstagram className="h-6 w-6" />
             </a>
-          }
-          {
+          )}
+          {siteInfo.linkedin && (
             <a
               href={siteInfo.linkedin}
               target="_blank"
@@ -89,8 +212,8 @@ function AddressCard() {
             >
               <FaLinkedin className="h-6 w-6" />
             </a>
-          }
-          {
+          )}
+          {siteInfo.github && (
             <a
               href={siteInfo.github}
               target="_blank"
@@ -99,7 +222,7 @@ function AddressCard() {
             >
               <FaGithub className="h-6 w-6" />
             </a>
-          }
+          )}
         </CardContent>
       </Card>
     </div>

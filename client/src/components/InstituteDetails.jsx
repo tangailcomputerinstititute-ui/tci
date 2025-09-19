@@ -48,10 +48,6 @@ function InstituteDetails({
           {siteDescriptionTitel}
         </h2>
         <p className="text-gray-600 leading-relaxed">{siteDescription}</p>
-        <p className="text-gray-600 leading-relaxed">
-          আমাদের লক্ষ্য হচ্ছে শিক্ষার্থীদের শুধু বইয়ের জ্ঞান নয়, বরং বাস্তব
-          জীবনের দক্ষতা অর্জনে সহায়তা করা।
-        </p>
       </div>
     </section>
   );
