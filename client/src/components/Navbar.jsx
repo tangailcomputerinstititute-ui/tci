@@ -6,10 +6,10 @@ function Navbar({ siteName, Button }) {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="#" className="flex items-center gap-2 font-bold text-xl">
+      <Link to="/" className="flex items-center gap-2 font-bold text-xl">
         <img src={Logo} alt="TCI" className="h-8 w-8" />
         <span className="text-sm md:text-2xl">{siteName}</span>
-      </a>
+      </Link>
       <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
         <a href="#courses" className="hover:text-slate-700">
           কোর্স
@@ -20,9 +20,9 @@ function Navbar({ siteName, Button }) {
         <a href="#schedule" className="hover:text-slate-700">
           শিডিউল
         </a>
-        <a href="#contact" className="hover:text-slate-700">
+        <Link to="contact" className="hover:text-slate-700">
           যোগাযোগ
-        </a>
+        </Link>
         <Link to="/register" className="hover:text-slate-700">
           রেজিস্টার
         </Link>

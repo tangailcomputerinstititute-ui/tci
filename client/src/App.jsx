@@ -8,14 +8,17 @@ import StudentForm from "./components/StudentFrom";
 import Students from "./components/Students";
 import Teachers from "./components/Teachers";
 import Slides from "./components/Slides";
+import Contact from "./components/Contact";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Home />} />{" "}
       <Route path="/student" element={<StudentForm />} />
+      <Route path="/contact" element={<Contact />} />
       <Route path="/admin" element={<Login />}>
         <Route path="students" element={<Students />} />
+
         <Route path="teachers" element={<Teachers />} />
         <Route path="message" element={<VisitorMessage />} />
         <Route path="settings" element={<Settings />} />

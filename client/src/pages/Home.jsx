@@ -15,6 +15,7 @@ import Courses from "@/components/Courses";
 import Navbar from "@/components/Navbar";
 import Question from "@/components/Question";
 import InstituteDetails from "@/components/InstituteDetails";
+import { Outlet } from "react-router-dom";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
